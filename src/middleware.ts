@@ -14,6 +14,10 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
+  if (token && pathname === "/cadastro") {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
   if (!token || !token.value) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
