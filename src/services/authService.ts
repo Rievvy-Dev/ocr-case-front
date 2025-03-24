@@ -1,5 +1,5 @@
 import axios from "axios";
-import { setCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 import { API_BASE_URL } from "@/config/config";
 
 interface AuthResponse {
@@ -16,6 +16,23 @@ interface LoginData {
   email: string;
   password: string;
 }
+
+export const isAuthenticated = async (): Promise<boolean> => {
+  const token = getCookie("jwt-token");
+
+  if (!token) return false;
+
+  try {
+    const response = await axios.get(`${API_BASE_URL}/auth/validate-token`, {
+      headers: { Authorization: `Bearer ${token}` },
+      withCredentials: true,
+    });
+
+    return response.status === 200;
+  } catch (error) {
+    return false;
+  }
+};
 
 export const registerUser = async (data: RegisterData) => {
   try {

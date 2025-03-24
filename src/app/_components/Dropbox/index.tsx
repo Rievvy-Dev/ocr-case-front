@@ -25,7 +25,7 @@ const Dropbox = () => {
         return;
       }
 
-      setErrorMessage(""); 
+      setErrorMessage("");
       setSelectedFile(file);
     } else {
       setErrorMessage("");
@@ -49,20 +49,28 @@ const Dropbox = () => {
 
   return (
     <S.ComponentContainer>
-      {!selectedFile && <S.Title>Arraste seu documento para o dropbox abaixo:</S.Title>}
+      {!selectedFile && (
+        <S.Title>Arraste seu documento para o dropbox abaixo:</S.Title>
+      )}
 
       {!selectedFile ? (
         <Dropzone onFileSelected={handleFileSelected} />
       ) : (
         <S.PDFContainer>
-          <PDFPreview file={selectedFile} />
+          <S.PDFWrapper>
+            <PDFPreview file={selectedFile} />
+          </S.PDFWrapper>
         </S.PDFContainer>
       )}
 
       {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
 
       <S.ButtonContainer>
-        <SubmitButton type="button" onClick={handleSubmit} disabled={!selectedFile}>
+        <SubmitButton
+          type="button"
+          onClick={handleSubmit}
+          disabled={!selectedFile}
+        >
           Analisar
         </SubmitButton>
       </S.ButtonContainer>
