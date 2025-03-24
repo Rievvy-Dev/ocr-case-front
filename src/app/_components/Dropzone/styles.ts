@@ -1,38 +1,44 @@
-"use client";
-
 import styled from "styled-components";
 
-export const DropboxContainer = styled.div`
-  width: 100%;
-  max-width: 400px;
-  height: 200px;
-  border: 2px dashed #007bff;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: #007bff;
-  cursor: pointer;
-  transition: 0.3s;
-  
-  &:hover {
-    background-color: #f0f8ff;
-  }
-`;
-
-export const PreviewContainer = styled.div`
+export const DropzoneContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 50%;
+  border: 2px dashed #ccc;
+  border-radius: 12px;
+  background-color: hsla(0, 0.00%, 0.00%, 0.83);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #3A5B22;
+  }
 `;
 
-export const RemoveButton = styled.button`
-  margin-top: 10px;
-  background-color: red;
-  color: white;
+export const UploadBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+`;
+
+export const UploadActions = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+`;
+
+export const UploadButton = styled.div`
+  padding: 10px 20px;
   border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s;
 `;

@@ -1,39 +1,69 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
+import { FiUpload } from "react-icons/fi";
 import * as S from "./styles";
+import { uploadFile } from "@/services/api";
+import SubmitButton from "../SubmitButton";
 
-const Dropzone = ({ onFileSelected }: { onFileSelected: (file: File | null) => void }) => {
-  const fileInputRef = useRef<HTMLInputElement>(null);
+interface DropzoneProps {
+  onFileUploaded: (fileId: string) => void;
+}
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      onFileSelected(e.target.files[0]);
-    }
+const Dropzone = ({ onFileUploaded }: DropzoneProps) => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || null;
+    setSelectedFile(file);
   };
 
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-  };
+  const handleUpload = async () => {
+    if (!selectedFile) return;
 
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    if (e.dataTransfer.files.length > 0) {
-      onFileSelected(e.dataTransfer.files[0]);
+    setIsUploading(true);
+    try {
+      const fileId = await uploadFile(selectedFile);
+      onFileUploaded(fileId);
+    } catch (error) {
+      console.error("Erro no upload do arquivo:", error);
+    } finally {
+      setIsUploading(false);
     }
   };
 
   return (
-    <S.DropboxContainer onDragOver={handleDragOver} onDrop={handleDrop} onClick={() => fileInputRef.current?.click()}>
-      <p>Arraste e solte um arquivo PDF aqui ou clique para selecionar.</p>
-      <input 
-        type="file" 
-        ref={fileInputRef} 
-        style={{ display: "none" }} 
-        accept="application/pdf" 
-        onChange={handleFileSelect} 
-      />
-    </S.DropboxContainer>
+    <>
+      {!selectedFile ? (
+        <S.DropzoneContainer>
+          <input
+            id="file-upload"
+            type="file"
+            accept="application/pdf"
+            style={{ display: "none" }}
+            onChange={handleFileChange}
+          />
+          <label htmlFor="file-upload">
+            <S.UploadBox>
+              <FiUpload size={40} />
+              <p>Arraste e solte ou clique para selecionar um arquivo PDF</p>
+            </S.UploadBox>
+          </label>
+        </S.DropzoneContainer>
+      ) : (
+        <p>{selectedFile.name}</p>
+      )}
+
+      <S.UploadButton>
+        <SubmitButton
+          onClick={handleUpload}
+          disabled={!selectedFile || isUploading}
+        >
+          {isUploading ? "Enviando..." : "Analisar"}
+        </SubmitButton>
+      </S.UploadButton>
+    </>
   );
 };
 
