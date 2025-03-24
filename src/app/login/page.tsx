@@ -34,7 +34,7 @@ export default function Login() {
   return (
     <S.PageContainer>
       <S.ImageWrapper>
-        <S.StyledImage src="/login.svg" alt="Imagem de fundo" layout="fill" />
+        <S.StyledImage src="assets/login.svg" alt="Imagem de fundo" fill />
       </S.ImageWrapper>
       <S.ContentContainer>
         <S.LoginContainer>

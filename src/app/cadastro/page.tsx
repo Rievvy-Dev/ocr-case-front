@@ -74,7 +74,7 @@ export default function Register() {
         </S.LoginContainer>
       </S.ContentContainer>
       <S.ImageWrapper>
-        <S.StyledImage src="/login.svg" alt="Imagem de fundo" layout="fill" />
+        <S.StyledImage src="assets/login.svg" alt="Imagem de fundo" fill />
       </S.ImageWrapper>
     </S.PageContainer>
   );
