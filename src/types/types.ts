@@ -8,7 +8,7 @@ interface Pdf {
 interface HistoricProps {
   pdfs: Pdf[];
   onSelectChat: (chatId: string | null) => void; 
-  onDeleteChat: (chatId: string) => void;
+  onDeleteChat: (fileId: string) => void;
   onCreateNewChat: () => void;
   selectedChat: string | null;
 }

@@ -47,12 +47,12 @@ export default function Home() {
     setSelectedChat(chatId);
   };
 
-  const handleDeleteChat = async (chatId: string) => {
+  const handleDeleteChat = async (fileId: string) => {
     try {
-      await deleteChat(chatId);
-      setPdfs((prev) => prev.filter((pdf) => pdf.chat?.id !== chatId));
+      await deleteChat(fileId);
+      setPdfs((prev) => prev.filter((pdf) => pdf.id !== fileId));
 
-      if (selectedChat === chatId) {
+      if (selectedChat === fileId) {
         setSelectedChat(null);
       }
     } catch (error) {

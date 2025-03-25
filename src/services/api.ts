@@ -54,7 +54,7 @@ export const fetchPdfs = async () => {
   }
 };
 
-export const deleteChat = async (chatId: string) => {
+export const deleteChat = async (fileId: string) => {
   try {
     const token = getCookie("jwt-token");
 
@@ -62,11 +62,13 @@ export const deleteChat = async (chatId: string) => {
       throw new Error("Token não encontrado. Faça login novamente.");
     }
 
-    await axios.delete(`${API_BASE_URL}/upload/chat`, {
+    await axios.delete(`${API_BASE_URL}/upload`, {
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
-      data: { chatId }, 
+      data: { fileId }, 
+      withCredentials: true,
     });
 
   } catch (error) {

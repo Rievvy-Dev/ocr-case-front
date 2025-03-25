@@ -12,17 +12,17 @@ interface ChatboxProps {
 }
 
 const Chatbox = ({ chatId, onChatCreated }: ChatboxProps) => {
-  const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
-    []
-  );
+  const [messages, setMessages] = useState<{ sender: string; text: string }[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [fileId, setFileId] = useState<string | null>(null);
+  const [summary, setSummary] = useState<string | null>(null); // Estado para o resumo
 
   useEffect(() => {
     if (chatId) {
       loadMessages();
     } else {
       setMessages([]);
+      setSummary(null); 
     }
   }, [chatId]);
 
@@ -30,9 +30,15 @@ const Chatbox = ({ chatId, onChatCreated }: ChatboxProps) => {
     try {
       const data = await fetchChatMessages(chatId as string);
       setMessages(Array.isArray(data) ? data : []);
+
+      const systemMessage = data.find(msg => msg.sender === "system");
+      if (systemMessage) {
+        setSummary(systemMessage.content); 
+      }
     } catch (error) {
       console.error("Erro ao carregar mensagens:", error);
       setMessages([]);
+      setSummary(null); 
     }
   };
 
@@ -40,11 +46,7 @@ const Chatbox = ({ chatId, onChatCreated }: ChatboxProps) => {
     if (!inputValue.trim() && !fileId) return;
 
     try {
-      const response = await sendMessage(
-        chatId,
-        inputValue || "Arquivo enviado",
-        fileId
-      );
+      const response = await sendMessage(chatId, inputValue || "Arquivo enviado", fileId);
 
       setMessages([
         ...messages,
@@ -70,8 +72,6 @@ const Chatbox = ({ chatId, onChatCreated }: ChatboxProps) => {
       console.error("Erro ao enviar arquivo:", error);
     }
   };
-  
-  
 
   return (
     <S.ChatContainer>
@@ -84,6 +84,12 @@ const Chatbox = ({ chatId, onChatCreated }: ChatboxProps) => {
           ))
         ) : (
           <p>Conversa vazia. Envie uma mensagem.</p>
+        )}
+
+        {summary && (
+          <S.Message sender="system">
+            <strong>Resumo:</strong> {summary}
+          </S.Message>
         )}
       </S.MessagesContainer>
 
