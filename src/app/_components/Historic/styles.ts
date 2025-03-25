@@ -79,6 +79,26 @@ export const PdfTitle = styled.p`
   text-overflow: ellipsis;
 `;
 
+export const DownloadButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  margin-right: 10px; 
+  transition: color 0.2s;
+
+  &:hover {
+    color: green;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+`;
+
 export const DeleteButton = styled.button`
   background: none;
   border: none;

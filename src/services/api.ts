@@ -171,3 +171,38 @@ export const sendMessage = async (
     throw error;
   }
 };
+
+export const downloadChatHistory = async (chatId: string) => {
+  try {
+    const token = getCookie("jwt-token");
+
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+
+    const response = await axios.post(
+      `${API_BASE_URL}/chat/download`,
+      { chatId },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        responseType: "blob",
+        withCredentials: true,
+      }
+    );
+
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `historico_chat_${chatId}.pdf`);
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error("Erro ao baixar histórico de chat:", error);
+    throw error;
+  }
+};
