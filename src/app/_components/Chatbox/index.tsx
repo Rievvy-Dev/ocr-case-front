@@ -4,13 +4,12 @@ import { useEffect, useState } from "react";
 import * as S from "./styles";
 import TextInput from "../TextInput";
 import Dropzone from "../Dropzone";
-import { fetchChatMessages, sendMessage } from "@/services/api";
+import { fetchChatMessages, sendMessage, uploadFile } from "@/services/api";
 
 interface ChatboxProps {
   chatId?: string | null;
   onChatCreated: (chatId: string) => void;
 }
-
 
 const Chatbox = ({ chatId, onChatCreated }: ChatboxProps) => {
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
@@ -18,7 +17,7 @@ const Chatbox = ({ chatId, onChatCreated }: ChatboxProps) => {
   );
   const [inputValue, setInputValue] = useState("");
   const [fileId, setFileId] = useState<string | null>(null);
-  
+
   useEffect(() => {
     if (chatId) {
       loadMessages();
@@ -26,7 +25,7 @@ const Chatbox = ({ chatId, onChatCreated }: ChatboxProps) => {
       setMessages([]);
     }
   }, [chatId]);
-  
+
   const loadMessages = async () => {
     try {
       const data = await fetchChatMessages(chatId as string);
@@ -36,7 +35,7 @@ const Chatbox = ({ chatId, onChatCreated }: ChatboxProps) => {
       setMessages([]);
     }
   };
-  
+
   const handleSendMessage = async () => {
     if (!inputValue.trim() && !fileId) return;
 
@@ -46,11 +45,13 @@ const Chatbox = ({ chatId, onChatCreated }: ChatboxProps) => {
         inputValue || "Arquivo enviado",
         fileId
       );
+
       setMessages([
         ...messages,
         { sender: "user", text: response.userMessage.content },
         { sender: "assistant", text: response.chatGptMessage.content },
       ]);
+
       onChatCreated(response.chatId);
     } catch (error) {
       console.error("Erro ao enviar mensagem:", error);
@@ -58,6 +59,19 @@ const Chatbox = ({ chatId, onChatCreated }: ChatboxProps) => {
 
     setInputValue("");
   };
+
+  const handleFileUpload = async (file: File) => {
+    try {
+      const response = await uploadFile(file); 
+
+      setFileId(response.fileId); 
+      onChatCreated(response.chatId);
+    } catch (error) {
+      console.error("Erro ao enviar arquivo:", error);
+    }
+  };
+  
+  
 
   return (
     <S.ChatContainer>
@@ -81,7 +95,7 @@ const Chatbox = ({ chatId, onChatCreated }: ChatboxProps) => {
             onSend={handleSendMessage}
           />
         ) : (
-          <Dropzone onFileUploaded={setFileId} />
+          <Dropzone onFileUploaded={handleFileUpload} />
         )}
       </S.InputContainer>
     </S.ChatContainer>

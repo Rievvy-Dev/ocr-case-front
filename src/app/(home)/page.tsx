@@ -5,14 +5,8 @@ import { useRouter } from "next/navigation";
 import Historic from "../_components/Historic";
 import * as S from "./styles";
 import { isAuthenticated } from "@/services/authService";
-import { fetchPdfs } from "@/services/api";
+import { fetchPdfs, deleteChat } from "@/services/api";
 import Chatbox from "../_components/Chatbox";
-
-interface Pdf {
-  id: string;
-  filename: string;
-  chat?: { id: string };
-}
 
 export default function Home() {
   const router = useRouter();
@@ -44,21 +38,54 @@ export default function Home() {
     }
   };
 
-  const handleSelectChat = (chatId: string | null, pdfId: string) => {
-    setSelectedChat(chatId);
-    setSelectedPdf(pdfId);
+  const handleCreateNewChat = () => {
+    setSelectedChat(null);
+    setSelectedPdf(null);
   };
 
+  const handleSelectChat = (chatId: string | null) => {
+    setSelectedChat(chatId);
+  };
+
+  const handleDeleteChat = async (chatId: string) => {
+    try {
+      await deleteChat(chatId);
+      setPdfs((prev) => prev.filter((pdf) => pdf.chat?.id !== chatId));
+
+      if (selectedChat === chatId) {
+        setSelectedChat(null);
+      }
+    } catch (error) {
+      console.error("Erro ao excluir chat:", error);
+    }
+  };
+
+  const handleFileUploaded = async (chatId: string) => {
+    await loadPdfs();
+    setSelectedChat(chatId);
+  };
+
+  const handleNewChat = () => {
+    setSelectedChat(null);
+    setSelectedPdf(null);
+    setPdfs((prev) => [...prev]);
+  };
   if (loading) return <p>Carregando...</p>;
 
   return (
     <S.PageContainer>
       <S.Sidebar>
-        <Historic pdfs={pdfs} onSelectChat={handleSelectChat} />
+        <Historic
+          pdfs={pdfs}
+          onSelectChat={handleSelectChat}
+          onDeleteChat={handleDeleteChat}
+          onCreateNewChat={handleCreateNewChat}
+          selectedChat={selectedChat}
+        />
       </S.Sidebar>
-  
+
       <S.MainContent>
-        <Chatbox chatId={selectedChat} onChatCreated={setSelectedChat} />
+        <Chatbox chatId={selectedChat} onChatCreated={handleFileUploaded} />
       </S.MainContent>
     </S.PageContainer>
   );

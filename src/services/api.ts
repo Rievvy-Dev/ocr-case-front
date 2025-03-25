@@ -2,11 +2,7 @@ import axios from "axios";
 import { API_BASE_URL } from "@/config/config";
 import { getCookie } from "cookies-next";
 
-interface UploadResponse {
-  message: string;
-}
-
-export const uploadFile = async (file: File): Promise<string> => {
+export const uploadFile = async (file: File): Promise<UploadResponse> => {
   try {
     const token = getCookie("jwt-token");
 
@@ -29,7 +25,7 @@ export const uploadFile = async (file: File): Promise<string> => {
       }
     );
 
-    return response.data.message;
+    return response.data;
   } catch (error) {
     console.error("Erro ao enviar arquivo:", error);
     throw error;
@@ -54,6 +50,27 @@ export const fetchPdfs = async () => {
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar PDFs:", error);
+    throw error;
+  }
+};
+
+export const deleteChat = async (chatId: string) => {
+  try {
+    const token = getCookie("jwt-token");
+
+    if (!token) {
+      throw new Error("Token não encontrado. Faça login novamente.");
+    }
+
+    await axios.delete(`${API_BASE_URL}/upload/chat`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: { chatId }, 
+    });
+
+  } catch (error) {
+    console.error("Erro ao deletar chat:", error);
     throw error;
   }
 };

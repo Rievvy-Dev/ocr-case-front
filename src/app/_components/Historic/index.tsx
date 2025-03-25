@@ -1,39 +1,38 @@
+
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./styles";
+import { FiTrash2, FiPlus } from "react-icons/fi";
 
-interface Pdf {
-  id: string;
-  filename: string;
-  chat?: { id: string };
-}
-
-interface HistoricProps {
-  pdfs: Pdf[];
-  onSelectChat: (chatId: string | null, pdfId: string) => void;
-}
-
-const Historic = ({ pdfs, onSelectChat }: HistoricProps) => {
-  const [selectedPdfId, setSelectedPdfId] = useState<string | null>(null);
+const Historic = ({ pdfs, onSelectChat, onDeleteChat, onCreateNewChat, selectedChat }: HistoricProps) => {
 
   const handleClick = (pdf: Pdf) => {
-    setSelectedPdfId(pdf.id);
-    onSelectChat(pdf.chat?.id || null, pdf.id);
+    onSelectChat(pdf.chat?.id || null);
   };
 
   return (
     <S.HistoricContainer>
-      <h2>Histórico</h2>
-      {pdfs.map((pdf) => (
-        <S.PdfItem
-          key={pdf.id}
-          onClick={() => handleClick(pdf)}
-          selected={pdf.id === selectedPdfId}
-        >
-          {pdf.filename}
-        </S.PdfItem>
-      ))}
+      <S.Header>
+        <h2>Histórico</h2>
+        <S.NewChatButton onClick={onCreateNewChat}>
+          <FiPlus size={20} /> Novo Chat
+        </S.NewChatButton>
+      </S.Header>
+      <S.PdfList>
+        {pdfs.map((pdf) => (
+          <S.PdfItem
+            key={pdf.id}
+            onClick={() => handleClick(pdf)}
+            selected={pdf.chat?.id === selectedChat}
+          >
+            <S.PdfTitle>{pdf.filename}</S.PdfTitle>
+            <S.DeleteButton onClick={(e) => { e.stopPropagation(); onDeleteChat(pdf.id); }}>
+              <FiTrash2 size={18} />
+            </S.DeleteButton>
+          </S.PdfItem>
+        ))}
+      </S.PdfList>
     </S.HistoricContainer>
   );
 };

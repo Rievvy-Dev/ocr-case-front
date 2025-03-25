@@ -37,6 +37,7 @@ export const TextInputContainer = styled.div`
   display: flex;
   flex: 1;
   align-items: center;
+  gap: 2rem;
 `;
 
 export const Input = styled.input`

@@ -8,7 +8,7 @@ export const ChatContainer = styled.div`
   height: 100%;
   width: 100%;
   border-left: 1px solid #ddd;
-  background:hsla(0, 0.00%, 0.00%, 0.83);
+  background: hsla(0, 0%, 10%, 0.9);
 `;
 
 export const MessagesContainer = styled.div`
@@ -34,7 +34,8 @@ export const Message = styled.div<{ sender: string }>`
 
 export const InputContainer = styled.div`
   display: flex;
-  padding: 1rem;
+  gap: 1rem;
+  padding: 3rem;
   border-top: 1px solid #ddd;
   align-items: center;
   justify-content: center;

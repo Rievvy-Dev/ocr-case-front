@@ -7,7 +7,7 @@ import { uploadFile } from "@/services/api";
 import SubmitButton from "../SubmitButton";
 
 interface DropzoneProps {
-  onFileUploaded: (fileId: string) => void;
+  onFileUploaded: (file: File) => void;
 }
 
 const Dropzone = ({ onFileUploaded }: DropzoneProps) => {
@@ -24,8 +24,8 @@ const Dropzone = ({ onFileUploaded }: DropzoneProps) => {
 
     setIsUploading(true);
     try {
-      const fileId = await uploadFile(selectedFile);
-      onFileUploaded(fileId);
+      const response = await uploadFile(selectedFile);  
+      onFileUploaded(selectedFile);  
     } catch (error) {
       console.error("Erro no upload do arquivo:", error);
     } finally {

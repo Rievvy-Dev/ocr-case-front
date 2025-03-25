@@ -4,24 +4,91 @@ import styled from "styled-components";
 
 export const PageContainer = styled.main`
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 300px 1fr;
   height: 100vh;
   width: 100vw;
+  background: #e5e5e5;
 `;
 
 export const Sidebar = styled.aside`
-  background: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #1e1e1e;
+  color: white;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 `;
 
 export const MainContent = styled.section`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #ffffff;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #1e1e1e;
+  overflow-y: auto;
 `;
 
-export const ChatSidebar = styled.aside`
-  background: #f9f9f9;
-  padding: 1rem;
+export const HistoricContainer = styled.div`
+  flex-grow: 1;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #444 #1e1e1e;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 10px;
+  }
+`;
+
+export const PdfItem = styled.div<{ selected: boolean }>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: ${({ selected }) => (selected ? "#3A5B22" : "transparent")};
+  color: ${({ selected }) => (selected ? "#fff" : "#bbb")};
+  transition: 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    background: #292929;
+  }
+`;
+
+export const NewChatButton = styled.button`
+  background: #008cba;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+  transition: 0.3s ease;
+
+  &:hover {
+    background: #0073a8;
+  }
+`;
+
+export const DeleteButton = styled.button`
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease;
+
+  &:hover {
+    background: darkred;
+  }
 `;

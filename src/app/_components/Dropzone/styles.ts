@@ -13,7 +13,7 @@ export const DropzoneContainer = styled.div`
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #3A5B22;
+    background-color: #0073a8;
   }
 `;
 
