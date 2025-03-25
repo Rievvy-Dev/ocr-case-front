@@ -24,7 +24,6 @@ const Dropzone = ({ onFileUploaded }: DropzoneProps) => {
 
     setIsUploading(true);
     try {
-      const response = await uploadFile(selectedFile);  
       onFileUploaded(selectedFile);  
     } catch (error) {
       console.error("Erro no upload do arquivo:", error);

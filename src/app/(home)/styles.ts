@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export const PageContainer = styled.main`
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 1fr 3fr;
   height: 100vh;
   width: 100vw;
   background: #e5e5e5;
@@ -15,7 +15,6 @@ export const Sidebar = styled.aside`
   flex-direction: column;
   gap: 10px;
   background: #1e1e1e;
-  color: white;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 `;
 
@@ -32,6 +31,7 @@ export const HistoricContainer = styled.div`
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #444 #1e1e1e;
+  width: 100%;
 
   &::-webkit-scrollbar {
     width: 6px;

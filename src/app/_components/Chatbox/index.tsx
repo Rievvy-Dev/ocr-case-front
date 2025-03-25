@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import * as S from "./styles";
 import TextInput from "../TextInput";
@@ -12,17 +10,19 @@ interface ChatboxProps {
 }
 
 const Chatbox = ({ chatId, onChatCreated }: ChatboxProps) => {
-  const [messages, setMessages] = useState<{ sender: string; text: string }[]>([]);
+  const [messages, setMessages] = useState<{ sender: string; content: string }[]>(
+    []
+  );
   const [inputValue, setInputValue] = useState("");
   const [fileId, setFileId] = useState<string | null>(null);
-  const [summary, setSummary] = useState<string | null>(null); // Estado para o resumo
+  const [summary, setSummary] = useState<string | null>(null); 
 
   useEffect(() => {
     if (chatId) {
       loadMessages();
     } else {
       setMessages([]);
-      setSummary(null); 
+      setSummary(null);
     }
   }, [chatId]);
 
@@ -31,42 +31,46 @@ const Chatbox = ({ chatId, onChatCreated }: ChatboxProps) => {
       const data = await fetchChatMessages(chatId as string);
       setMessages(Array.isArray(data) ? data : []);
 
-      const systemMessage = data.find(msg => msg.sender === "system");
+      const systemMessage = data.find((msg) => msg.sender === "system");
       if (systemMessage) {
-        setSummary(systemMessage.content); 
+        setSummary(systemMessage.content);
       }
     } catch (error) {
       console.error("Erro ao carregar mensagens:", error);
       setMessages([]);
-      setSummary(null); 
+      setSummary(null);
     }
   };
 
   const handleSendMessage = async () => {
-    if (!inputValue.trim() && !fileId) return;
-
+    if (!inputValue.trim() && !fileId) return; 
+  
     try {
-      const response = await sendMessage(chatId, inputValue || "Arquivo enviado", fileId);
-
-      setMessages([
-        ...messages,
-        { sender: "user", text: response.userMessage.content },
-        { sender: "assistant", text: response.chatGptMessage.content },
+      const response = await sendMessage(
+        chatId,
+        inputValue || "Arquivo enviado", 
+        fileId
+      );
+  
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { sender: "user", content: response.userMessage.content },
+        { sender: "assistant", content: response.chatGptMessage.content },
       ]);
-
-      onChatCreated(response.chatId);
+  
+      onChatCreated(response.chatId); 
     } catch (error) {
       console.error("Erro ao enviar mensagem:", error);
     }
-
-    setInputValue("");
+  
+    setInputValue(""); 
   };
 
   const handleFileUpload = async (file: File) => {
     try {
-      const response = await uploadFile(file); 
+      const response = await uploadFile(file);
 
-      setFileId(response.fileId); 
+      setFileId(response.fileId);
       onChatCreated(response.chatId);
     } catch (error) {
       console.error("Erro ao enviar arquivo:", error);
@@ -79,17 +83,11 @@ const Chatbox = ({ chatId, onChatCreated }: ChatboxProps) => {
         {messages.length > 0 ? (
           messages.map((msg, index) => (
             <S.Message key={index} sender={msg.sender}>
-              {msg.text}
+              {msg.content}
             </S.Message>
           ))
         ) : (
           <p>Conversa vazia. Envie uma mensagem.</p>
-        )}
-
-        {summary && (
-          <S.Message sender="system">
-            <strong>Resumo:</strong> {summary}
-          </S.Message>
         )}
       </S.MessagesContainer>
 

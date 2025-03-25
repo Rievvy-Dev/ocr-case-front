@@ -143,21 +143,19 @@ export const sendMessage = async (
     }
 
     const validChatId = chatId ?? undefined;
-    const validFileId = fileId ?? undefined;
+    const validFileId = fileId ?? undefined; 
 
     if (!validChatId && !validFileId) {
-      throw new Error(
-        "É necessário fornecer um fileId para criar um novo chat."
-      );
+      throw new Error("É necessário fornecer um chatId ou fileId.");
     }
 
     const response = await axios.post(
-      `${API_BASE_URL}/messages`,
+      `${API_BASE_URL}/chat/messages`,
       {
         chatId: validChatId,
         sender: "user",
         message: content,
-        fileId: validFileId,
+        fileId: validFileId, 
       },
       {
         headers: {

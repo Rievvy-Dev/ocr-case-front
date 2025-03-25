@@ -15,21 +15,21 @@ export const MessagesContainer = styled.div`
   flex: 1;
   overflow-y: auto;
   padding: 1rem;
-  
-  p {
-    display: flex;
-    justify-content: center;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 export const Message = styled.div<{ sender: string }>`
-  background: ${(props) => (props.sender === "user" ? "#007bff" : "#f1f1f1")};
-  color: ${(props) => (props.sender === "user" ? "#fff" : "#000")};
+  background: hsla(0, 3.00%, 25.90%, 0.36);
+  color: #fff;
   padding: 0.5rem 1rem;
   border-radius: 12px;
   margin: 0.5rem 0;
   align-self: ${(props) => (props.sender === "user" ? "flex-end" : "flex-start")};
   max-width: 60%;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const InputContainer = styled.div`

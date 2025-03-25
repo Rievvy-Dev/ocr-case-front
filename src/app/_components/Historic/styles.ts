@@ -5,7 +5,6 @@ export const HistoricContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 300px;
   height: 100vh;
   background: hsla(0, 0%, 10%, 0.9);
   padding: 20px;
