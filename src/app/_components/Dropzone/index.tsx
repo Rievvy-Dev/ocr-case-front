@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { FiUpload } from "react-icons/fi";
 import * as S from "./styles";
-import { uploadFile } from "@/services/api";
 import SubmitButton from "../SubmitButton";
 
 interface DropzoneProps {
@@ -40,7 +39,7 @@ const Dropzone = ({ onFileUploaded }: DropzoneProps) => {
       setIsUploading(false);
     }
   };
-
+console.log(isUploading)
   return (
     <>
       {!selectedFile ? (

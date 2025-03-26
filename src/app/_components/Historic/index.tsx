@@ -1,7 +1,6 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
 import * as S from "./styles";
 import { FiTrash2, FiPlus, FiDownload } from "react-icons/fi";
 import { downloadChatHistory } from "@/services/api";

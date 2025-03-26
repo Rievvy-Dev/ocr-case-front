@@ -7,6 +7,7 @@ import InputField from "../_components/InputField";
 import SubmitButton from "../_components/SubmitButton";
 import { registerUser } from "@/services/authService";
 import TextButton from "../_components/TextButton";
+import logo from "../../../public/assets/logo.jpg"
 
 export default function Register() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -74,7 +75,7 @@ export default function Register() {
         </S.LoginContainer>
       </S.ContentContainer>
       <S.ImageWrapper>
-        <S.StyledImage src="assets/login.svg" alt="Imagem de fundo" fill />
+        <S.StyledImage src={logo} alt="Imagem de fundo" fill />
       </S.ImageWrapper>
     </S.PageContainer>
   );

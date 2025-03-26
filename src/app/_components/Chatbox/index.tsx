@@ -15,14 +15,12 @@ const Chatbox = ({ chatId, onChatCreated }: ChatboxProps) => {
   );
   const [inputValue, setInputValue] = useState("");
   const [fileId, setFileId] = useState<string | null>(null);
-  const [summary, setSummary] = useState<string | null>(null); 
 
   useEffect(() => {
     if (chatId) {
       loadMessages();
     } else {
       setMessages([]);
-      setSummary(null);
     }
   }, [chatId]);
 
@@ -30,15 +28,9 @@ const Chatbox = ({ chatId, onChatCreated }: ChatboxProps) => {
     try {
       const data = await fetchChatMessages(chatId as string);
       setMessages(Array.isArray(data) ? data : []);
-
-      const systemMessage = data.find((msg) => msg.sender === "system");
-      if (systemMessage) {
-        setSummary(systemMessage.content);
-      }
     } catch (error) {
       console.error("Erro ao carregar mensagens:", error);
       setMessages([]);
-      setSummary(null);
     }
   };
 

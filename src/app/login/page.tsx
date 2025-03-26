@@ -7,6 +7,7 @@ import InputField from "../_components/InputField";
 import SubmitButton from "../_components/SubmitButton";
 import { loginUser } from "@/services/authService";
 import TextButton from "../_components/TextButton";
+import logo from "../../../public/assets/logo.jpg"
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -34,7 +35,7 @@ export default function Login() {
   return (
     <S.PageContainer>
       <S.ImageWrapper>
-        <S.StyledImage src="assets/login.svg" alt="Imagem de fundo" fill />
+        <S.StyledImage src={logo} alt="Imagem de fundo" fill />
       </S.ImageWrapper>
       <S.ContentContainer>
         <S.LoginContainer>

@@ -9,14 +9,14 @@ export const InputWrapper = styled.div`
 
   label {
     font-size: 0.9rem;
-    color: #000000;
+    color: #FFFFFF;
   }
 `;
 
 export const StyledInput = styled.input`
   border: 1px solid #d9d9d9;
-  background-color: #FFFFFF;
-  color: #000000;
+  background-color:rgb(59, 56, 56);
+  color: #FFFFFF;
   padding: 0.75rem;
   border-radius: 10px;
   font-size: 0.9rem;

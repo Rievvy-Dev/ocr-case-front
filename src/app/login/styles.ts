@@ -6,7 +6,7 @@ import Image from 'next/image'
 export const PageContainer = styled.main`
     display: grid;
     grid-template-columns: 1fr 1fr;
-    background-color: #FFFFFF;
+    background-color:rgb(37, 36, 36);
     height: 100vh;
     width: 100vw;
 `;
@@ -43,7 +43,7 @@ export const LoginContainer = styled.div`
 
 export const Title = styled.h1`
     font-size: 2rem;
-    color: #000000;
+    color: #FFFFFF;
     width: 100%;
 `;
 
@@ -64,6 +64,6 @@ export const Register = styled.div`
 
   p {
     font-size: 0.875rem;
-    color: #000000;
+    color: #FFFFFF;
   }  
 `;

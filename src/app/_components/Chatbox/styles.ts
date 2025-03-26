@@ -35,7 +35,7 @@ export const Message = styled.div<{ sender: string }>`
 export const InputContainer = styled.div`
   display: flex;
   gap: 1rem;
-  padding: 3rem;
+  padding: 2rem;
   border-top: 1px solid #ddd;
   align-items: center;
   justify-content: center;

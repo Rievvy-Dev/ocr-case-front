@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const SubmitButton = styled.button`
   padding: 12px;
-  background-color: #3A5B22;
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 10px;
@@ -14,7 +14,7 @@ export const SubmitButton = styled.button`
   text-transform: uppercase;
 
   &:hover {
-    background-color:rgb(69, 116, 36);
+    background-color: #0056b3;
   }
 
   &:disabled {

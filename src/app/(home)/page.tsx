@@ -64,12 +64,7 @@ export default function Home() {
     await loadPdfs();
     setSelectedChat(chatId);
   };
-
-  const handleNewChat = () => {
-    setSelectedChat(null);
-    setSelectedPdf(null);
-    setPdfs((prev) => [...prev]);
-  };
+  
   if (loading) return <p>Carregando...</p>;
 
   return (

@@ -1,6 +1,5 @@
 import axios from "axios";
 import { getCookie, setCookie } from "cookies-next";
-import { API_BASE_URL } from "@/config/config";
 
 interface AuthResponse {
   accessToken: string;
@@ -23,7 +22,7 @@ export const isAuthenticated = async (): Promise<boolean> => {
   if (!token) return false;
 
   try {
-    const response = await axios.get(`${API_BASE_URL}/auth/validate-token`, {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/validate-token`, {
       headers: { Authorization: `Bearer ${token}` },
       withCredentials: true,
     });
@@ -37,7 +36,7 @@ export const isAuthenticated = async (): Promise<boolean> => {
 export const registerUser = async (data: RegisterData) => {
   try {
     const response = await axios.post<AuthResponse>(
-      `${API_BASE_URL}/auth/register`,
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
       data,
       {
         headers: { "Content-Type": "application/json" },
@@ -66,7 +65,7 @@ export const registerUser = async (data: RegisterData) => {
 
 export const loginUser = async (data: LoginData) => {
     try {
-      const response = await axios.post<AuthResponse>(`${API_BASE_URL}/auth/login`, data, {
+      const response = await axios.post<AuthResponse>(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, data, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true, 
       });

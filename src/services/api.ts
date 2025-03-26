@@ -1,5 +1,4 @@
 import axios from "axios";
-import { API_BASE_URL } from "@/config/config";
 import { getCookie } from "cookies-next";
 
 export const uploadFile = async (file: File): Promise<UploadResponse> => {
@@ -14,7 +13,7 @@ export const uploadFile = async (file: File): Promise<UploadResponse> => {
     formData.append("file", file);
 
     const response = await axios.post<UploadResponse>(
-      `${API_BASE_URL}/upload`,
+      `${process.env.NEXT_PUBLIC_API_URL}/upload`,
       formData,
       {
         headers: {
@@ -40,7 +39,7 @@ export const fetchPdfs = async () => {
       throw new Error("Token não encontrado. Faça login novamente.");
     }
 
-    const response = await axios.get(`${API_BASE_URL}/upload`, {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/upload`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -62,7 +61,7 @@ export const deleteChat = async (fileId: string) => {
       throw new Error("Token não encontrado. Faça login novamente.");
     }
 
-    await axios.delete(`${API_BASE_URL}/upload`, {
+    await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/upload`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -86,7 +85,7 @@ export const fetchChatMessages = async (chatId: string) => {
     }
 
     const response = await axios.post(
-      `${API_BASE_URL}/chat/messages/history`,
+      `${process.env.NEXT_PUBLIC_API_URL}/chat/messages/history`,
       { chatId },
       {
         headers: {
@@ -112,7 +111,7 @@ export const fetchPdfById = async (pdfId: string) => {
     }
 
     const response = await axios.post(
-      `${API_BASE_URL}/upload/file`,
+      `${process.env.NEXT_PUBLIC_API_URL}/upload/file`,
       { pdfId },
       {
         headers: {
@@ -150,7 +149,7 @@ export const sendMessage = async (
     }
 
     const response = await axios.post(
-      `${API_BASE_URL}/chat/messages`,
+      `${process.env.NEXT_PUBLIC_API_URL}/chat/messages`,
       {
         chatId: validChatId,
         sender: "user",
@@ -181,7 +180,7 @@ export const downloadChatHistory = async (chatId: string) => {
     }
 
     const response = await axios.post(
-      `${API_BASE_URL}/chat/download`,
+      `${process.env.NEXT_PUBLIC_API_URL}/chat/download`,
       { chatId },
       {
         headers: {
