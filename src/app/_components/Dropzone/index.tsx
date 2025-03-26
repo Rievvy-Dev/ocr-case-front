@@ -16,7 +16,16 @@ const Dropzone = ({ onFileUploaded }: DropzoneProps) => {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
-    setSelectedFile(file);
+    
+    if (file) {
+      const allowedTypes = ["application/pdf", "image/png", "image/jpeg"];
+      if (!allowedTypes.includes(file.type)) {
+        alert("Apenas arquivos PDF, PNG e JPEG são permitidos.");
+        return;
+      }
+      
+      setSelectedFile(file);
+    }
   };
 
   const handleUpload = async () => {
@@ -39,14 +48,14 @@ const Dropzone = ({ onFileUploaded }: DropzoneProps) => {
           <input
             id="file-upload"
             type="file"
-            accept="application/pdf"
+            accept="application/pdf, image/png, image/jpeg"
             style={{ display: "none" }}
             onChange={handleFileChange}
           />
           <label htmlFor="file-upload">
             <S.UploadBox>
               <FiUpload size={40} />
-              <p>Arraste e solte ou clique para selecionar um arquivo PDF</p>
+              <p>Arraste e solte ou clique para selecionar um arquivo PDF ou imagem</p>
             </S.UploadBox>
           </label>
         </S.DropzoneContainer>
