@@ -1,12 +1,17 @@
-
 "use client";
 
 import * as S from "./styles";
 import { FiTrash2, FiPlus, FiDownload } from "react-icons/fi";
 import { downloadChatHistory } from "@/services/api";
+import { FaRegFileAlt } from "react-icons/fa";
 
-const Historic = ({ pdfs, onSelectChat, onDeleteChat, onCreateNewChat, selectedChat }: HistoricProps) => {
-
+const Historic = ({
+  pdfs,
+  onSelectChat,
+  onDeleteChat,
+  onCreateNewChat,
+  selectedChat,
+}: HistoricProps) => {
   const handleClick = (pdf: Pdf) => {
     onSelectChat(pdf.chat?.id || null);
   };
@@ -34,13 +39,28 @@ const Historic = ({ pdfs, onSelectChat, onDeleteChat, onCreateNewChat, selectedC
             onClick={() => handleClick(pdf)}
             selected={pdf.chat?.id === selectedChat}
           >
-            <S.PdfTitle>{pdf.filename}</S.PdfTitle>
-            <S.DownloadButton onClick={(e) => { e.stopPropagation(); handleDownload(pdf); }}>
-              <FiDownload size={18} />
-            </S.DownloadButton>
-            <S.DeleteButton onClick={(e) => { e.stopPropagation(); onDeleteChat(pdf.id); }}>
-              <FiTrash2 size={18} />
-            </S.DeleteButton>
+            <S.PdfContentText>
+              <FaRegFileAlt size={18} />
+              <S.PdfTitle>{pdf.filename}</S.PdfTitle>
+            </S.PdfContentText>
+            <S.ActionButtons>
+              <S.DownloadButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDownload(pdf);
+                }}
+              >
+                <FiDownload size={18} />
+              </S.DownloadButton>
+              <S.DeleteButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDeleteChat(pdf.id);
+                }}
+              >
+                <FiTrash2 size={18} />
+              </S.DeleteButton>
+            </S.ActionButtons>
           </S.PdfItem>
         ))}
       </S.PdfList>

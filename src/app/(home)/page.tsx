@@ -7,6 +7,7 @@ import * as S from "./styles";
 import { isAuthenticated } from "@/services/authService";
 import { fetchPdfs, deleteChat } from "@/services/api";
 import Chatbox from "../_components/Chatbox";
+import Navbar from "../_components/Navbar";
 
 export default function Home() {
   const router = useRouter();
@@ -64,24 +65,27 @@ export default function Home() {
     await loadPdfs();
     setSelectedChat(chatId);
   };
-  
+
   if (loading) return <p>Carregando...</p>;
 
   return (
     <S.PageContainer>
-      <S.Sidebar>
-        <Historic
-          pdfs={pdfs}
-          onSelectChat={handleSelectChat}
-          onDeleteChat={handleDeleteChat}
-          onCreateNewChat={handleCreateNewChat}
-          selectedChat={selectedChat}
-        />
-      </S.Sidebar>
+      <Navbar />
+      <S.MainContainer>
+        <S.Sidebar>
+          <Historic
+            pdfs={pdfs}
+            onSelectChat={handleSelectChat}
+            onDeleteChat={handleDeleteChat}
+            onCreateNewChat={handleCreateNewChat}
+            selectedChat={selectedChat}
+          />
+        </S.Sidebar>
 
-      <S.MainContent>
-        <Chatbox chatId={selectedChat} onChatCreated={handleFileUploaded} />
-      </S.MainContent>
+        <S.MainContent>
+          <Chatbox chatId={selectedChat} onChatCreated={handleFileUploaded} />
+        </S.MainContent>
+      </S.MainContainer>
     </S.PageContainer>
   );
 }

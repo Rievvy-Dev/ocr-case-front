@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { FiUpload } from "react-icons/fi";
+import { FaSpinner } from "react-icons/fa";
 import * as S from "./styles";
 import SubmitButton from "../SubmitButton";
 
@@ -32,16 +33,16 @@ const Dropzone = ({ onFileUploaded }: DropzoneProps) => {
 
     setIsUploading(true);
     try {
-      onFileUploaded(selectedFile);  
+      await onFileUploaded(selectedFile);  
     } catch (error) {
       console.error("Erro no upload do arquivo:", error);
     } finally {
       setIsUploading(false);
     }
   };
-console.log(isUploading)
+  
   return (
-    <>
+    <S.Container>
       {!selectedFile ? (
         <S.DropzoneContainer>
           <input
@@ -59,18 +60,15 @@ console.log(isUploading)
           </label>
         </S.DropzoneContainer>
       ) : (
-        <p>{selectedFile.name}</p>
+        <S.FileName>{selectedFile.name}</S.FileName>
       )}
 
       <S.UploadButton>
-        <SubmitButton
-          onClick={handleUpload}
-          disabled={!selectedFile || isUploading}
-        >
-          {isUploading ? "Enviando..." : "Analisar"}
+        <SubmitButton onClick={handleUpload} disabled={!selectedFile || isUploading}>
+          {isUploading ? <FaSpinner className="spinner" /> : "Analisar"}
         </SubmitButton>
       </S.UploadButton>
-    </>
+    </S.Container>
   );
 };
 

@@ -3,6 +3,7 @@
 
 import { FiSend } from "react-icons/fi";
 import * as S from "./styles";
+import IconButton from "../IconButton";
 
 interface TextInputProps {
   value: string;
@@ -20,9 +21,7 @@ const TextInput = ({ value, onChange, onSend }: TextInputProps) => {
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && onSend()}
       />
-      <S.SendButton onClick={onSend}>
-        <FiSend size={24} />
-      </S.SendButton>
+      <IconButton onClick={onSend} icon={<FiSend />} size={24} />
     </S.TextInputContainer>
   );
 };

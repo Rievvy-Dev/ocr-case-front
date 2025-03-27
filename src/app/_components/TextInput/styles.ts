@@ -37,7 +37,6 @@ export const TextInputContainer = styled.div`
   display: flex;
   flex: 1;
   align-items: center;
-  gap: 2rem;
 `;
 
 export const Input = styled.input`
@@ -45,19 +44,4 @@ export const Input = styled.input`
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 8px;
-`;
-
-export const SendButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #007bff;
-`;
-
-export const IconButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  margin-left: 10px;
-  color: #007bff;
 `;

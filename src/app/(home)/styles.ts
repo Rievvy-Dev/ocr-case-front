@@ -3,24 +3,39 @@
 import styled from "styled-components";
 
 export const PageContainer = styled.main`
-  display: grid;
-  grid-template-columns: 1fr 3fr;
+  display: flex;
+  flex-direction: column;
   height: 100vh;
   width: 100vw;
-  background: #e5e5e5;
+  background: hsla(0, 0%, 10%, 0.9);
+`;
+
+export const NavContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const MainContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding: 1rem 0;
 `;
 
 export const Sidebar = styled.aside`
   display: flex;
   flex-direction: column;
-  gap: 10px;
   background: #1e1e1e;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
 `;
 
 export const MainContent = styled.section`
   display: flex;
   flex-direction: column;
+  height: 100%;
   justify-content: space-between;
   background: #1e1e1e;
   overflow-y: auto;
